@@ -20,7 +20,6 @@ from aqt import mw
 from aqt.utils import showInfo
 from aqt.qt import *
 from anki.hooks import addHook
-from anki.template import furigana
 import anki.sound
 
 from .util import *
@@ -204,7 +203,8 @@ def selectForvoSearchPhrase(n):
     phrase = mw.col.media.strip(n[exprName])
     
     # TODO: Are we sure that this always works?
-    return furigana.kanji(phrase)
+    # Does not seem to work as furigna is removed.
+    return phrase
 
 def RunForvoDownloadFromEditor(editor):
     # Select search phrase from the editor
