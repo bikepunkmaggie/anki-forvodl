@@ -20,7 +20,6 @@ from aqt import mw
 from aqt.utils import showInfo
 from aqt.qt import *
 from anki.hooks import addHook
-from anki.template import furigana
 import anki.sound
 
 from .util import *
@@ -172,10 +171,24 @@ class DownloaderDialog(QDialog):
         return files
 
 def RunForvoDownload(phrase, parentWin):
+
+    linknd = "https://en.dict.naver.com/#/search?query=" + phrase
+    linkgi="https://www.google.co.kr/search?q=" + phrase + "&tbm=isch"
+    linkvx="https://www.verbix.com/webverbix/Korean/"+phrase
+    linkbd="www.bluedic.com/"+phrase
+    linkpg="https://papago.naver.com/?sk=ko&tk=en&st=" + phrase
+    
+    QDesktopServices.openUrl(QUrl(linkvx))
+    QDesktopServices.openUrl(QUrl(linknd))
+    QDesktopServices.openUrl(QUrl(linkbd))   
+    QDesktopServices.openUrl(QUrl(linkpg))
+    QDesktopServices.openUrl(QUrl(linkgi))
+   
     # Open Forvo in external browser
     link = config["forvoLookupUrl"].format(phrase=phrase)
     QDesktopServices.openUrl(QUrl(link))
-    
+   
+
     # Show dialog and wait for audio files to be confirmed
     dialog = DownloaderDialog(parentWin)
 
@@ -204,7 +217,7 @@ def selectForvoSearchPhrase(n):
     phrase = mw.col.media.strip(n[exprName])
     
     # TODO: Are we sure that this always works?
-    return furigana.kanji(phrase)
+    return phrase
 
 def RunForvoDownloadFromEditor(editor):
     # Select search phrase from the editor
